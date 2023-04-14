@@ -10,7 +10,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Stone, function (sprite, otherSp
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
     otherSprite.destroy(effects.spray, 500)
-    info.changeScoreBy(randint(5, 5))
+    info.changeScoreBy(5)
     time += 1
     music.baDing.play()
 })
