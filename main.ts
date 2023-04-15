@@ -1,11 +1,7 @@
-enum ActionKind {
-    Walking,
-    Idle,
-    Jumping
-}
 namespace SpriteKind {
     export const Gold = SpriteKind.create()
     export const Stone = SpriteKind.create()
+    export const Badfood = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Stone, function (sprite, otherSprite) {
     otherSprite.destroy(effects.spray, 500)
@@ -13,15 +9,15 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Stone, function (sprite, otherSp
     info.changeLifeBy(-1)
     music.siren.play()
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
-    otherSprite.destroy(effects.spray, 500)
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite2, otherSprite2) {
+    otherSprite2.destroy(effects.spray, 500)
     info.changeScoreBy(5)
     time += 1
     music.baDing.play()
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Gold, function (sprite, otherSprite) {
-    otherSprite.destroy(effects.spray, 500)
-    info.changeScoreBy(randint(4, 6))
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Gold, function (sprite3, otherSprite3) {
+    otherSprite3.destroy(effects.spray, 500)
+    info.changeScoreBy(randint(5, 5))
     music.powerUp.play()
 })
 let GoldFood: Sprite = null
@@ -248,43 +244,61 @@ img`
     . . . e e e e e e e e e e . . . 
     `,
 img`
-    . . . . . . b b b b . . . . . . 
-    . . . . . . b 4 4 4 b . . . . . 
-    . . . . . . b b 4 4 4 b . . . . 
-    . . . . . b 4 b b b 4 4 b . . . 
-    . . . . b d 5 5 5 4 b 4 4 b . . 
-    . . . . b 3 2 3 5 5 4 e 4 4 b . 
-    . . . b d 2 2 2 5 7 5 4 e 4 4 e 
-    . . . b 5 3 2 3 5 5 5 5 e e e e 
-    . . b d 7 5 5 5 3 2 3 5 5 e e e 
-    . . b 5 5 5 5 5 2 2 2 5 5 d e e 
-    . b 3 2 3 5 7 5 3 2 3 5 d d e 4 
-    . b 2 2 2 5 5 5 5 5 5 d d e 4 . 
-    b d 3 2 d 5 5 5 d d d 4 4 . . . 
-    b 5 5 5 5 d d 4 4 4 4 . . . . . 
-    4 d d d 4 4 4 . . . . . . . . . 
-    4 4 4 4 . . . . . . . . . . . . 
+    . . . . . . . 6 . . . . . . . . 
+    . . . . . . 8 6 6 . . . 6 8 . . 
+    . . . e e e 8 8 6 6 . 6 7 8 . . 
+    . . e 2 2 2 2 e 8 6 6 7 6 . . . 
+    . e 2 2 4 4 2 7 7 7 7 7 8 6 . . 
+    . e 2 4 4 2 6 7 7 7 6 7 6 8 8 . 
+    e 2 4 5 2 2 6 7 7 6 2 7 7 6 . . 
+    e 2 4 4 2 2 6 7 6 2 2 6 7 7 6 . 
+    e 2 4 2 2 2 6 6 2 2 2 e 7 7 6 . 
+    e 2 4 2 2 4 2 2 2 4 2 2 e 7 6 . 
+    e 2 4 2 2 2 2 2 2 2 2 2 e c 6 . 
+    e 2 2 2 2 2 2 2 4 e 2 e e c . . 
+    e e 2 e 2 2 4 2 2 e e e c . . . 
+    e e e e 2 e 2 2 e e e c . . . . 
+    e e e 2 e e c e c c c . . . . . 
+    . c c c c c c c . . . . . . . . 
+    `,
+img`
+    . . . . . . . . . . . 6 6 6 6 6 
+    . . . . . . . . . 6 6 7 7 7 7 8 
+    . . . . . . 8 8 8 7 7 8 8 6 8 8 
+    . . e e e e c 6 6 8 8 . 8 7 8 . 
+    . e 2 5 4 2 e c 8 . . . 6 7 8 . 
+    e 2 4 2 2 2 2 2 c . . . 6 7 8 . 
+    e 2 2 2 2 2 2 2 c . . . 8 6 8 . 
+    e 2 e e 2 2 2 2 e e e e c 6 8 . 
+    c 2 e e 2 2 2 2 e 2 5 4 2 c 8 . 
+    . c 2 e e e 2 e 2 4 2 2 2 2 c . 
+    . . c 2 2 2 e e 2 2 2 2 2 2 2 e 
+    . . . e c c e c 2 2 2 2 2 2 2 e 
+    . . . . . . . c 2 e e 2 2 e 2 c 
+    . . . . . . . c e e e e e e 2 c 
+    . . . . . . . . c e 2 2 2 2 c . 
+    . . . . . . . . . c c c c c . . 
     `
 ]
 game.onUpdateInterval(2000, function () {
     if (Math.percentChance(51)) {
         Stone2 = sprites.create(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . e e e e e . . . . 
-            . . . . e e e e f f f e e . . . 
-            . . e e f f f f f f f f e . . . 
-            . e e f f b f f b f f f f e . . 
-            e e f f f f f f f f f f f e . . 
-            e f f b f f f f f f b f f e e . 
-            e f f f f f b f f f f f f f e . 
-            e e f f f f f f f b f f b f e . 
-            . e f f f f f f f f f f f f e . 
-            . . e f f b f f f f f f e e e . 
-            . . e e f f f f f b f e e . . . 
-            . . . . e e f f f f e e . . . . 
-            . . . . . e e e e e . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
+            . . . . . . b b b b . . . . . . 
+            . . . . . . b 4 4 4 b . . . . . 
+            . . . . . . b b 4 4 4 b . . . . 
+            . . . . . b 4 b b b 4 4 b . . . 
+            . . . . b d 5 5 5 4 b 4 4 b . . 
+            . . . . b 3 2 3 5 5 4 e 4 4 b . 
+            . . . b d 2 2 2 5 7 5 4 e 4 4 e 
+            . . . b 5 3 2 3 5 5 5 5 e e e e 
+            . . b d 7 5 5 5 3 2 3 5 5 e e e 
+            . . b 5 5 5 5 5 2 2 2 5 5 d e e 
+            . b 3 2 3 5 7 5 3 2 3 5 d d e 4 
+            . b 2 2 2 5 5 5 5 5 5 d d e 4 . 
+            b d 3 2 d 5 5 5 d d d 4 4 . . . 
+            b 5 5 5 5 d d 4 4 4 4 . . . . . 
+            4 d d d 4 4 4 . . . . . . . . . 
+            4 4 4 4 . . . . . . . . . . . . 
             `, SpriteKind.Stone)
         Stone2.setPosition(randint(0, scene.screenWidth()), 0)
         Stone2.vy = velo

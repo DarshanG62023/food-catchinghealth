@@ -12,7 +12,8 @@
         "tilemap.g.jres",
         "tilemap.g.ts",
         "images.g.jres",
-        "images.g.ts"
+        "images.g.ts",
+        "main.py"
     ],
     "testFiles": [
         "test.ts"
@@ -21,7 +22,7 @@
         "branch": "v0.15.16",
         "tag": "v0.15.16",
         "commits": "https://github.com/microsoft/pxt-arcade/commits/8b7233254cf52189d669a0590117a7824e1b3513",
-        "target": "1.12.26",
+        "target": "1.12.29",
         "pxt": "5.30.41",
         "targetId": "arcade"
     },
